@@ -2,7 +2,10 @@
   "name": "zipkin-js-example",
   "version": "0.0.1",
   "description": "Example project that shows how to use zipkin with javascript",
-  "main": "app.js",
+  "repository": "https://github.com/openzipkin/zipkin-js",
+  "scripts": {
+    "lint": "eslint ."
+  },
   "dependencies": {
     "express": "^4.14.0",
     "express-http-proxy": "^0.9.1",
@@ -10,5 +13,12 @@
     "zipkin-instrumentation-express": "^0.2.6",
     "zipkin-instrumentation-fetch": "^0.2.6",
     "zipkin-transport-http": "^0.2.6"
+  },
+  "devDependencies": {
+    "eslint": "^3.4.0",
+    "eslint-config-airbnb": "^10.0.1",
+    "eslint-plugin-import": "^1.14.0",
+    "eslint-plugin-jsx-a11y": "^2.2.1",
+    "eslint-plugin-react": "^6.2.0"
   }
 }
