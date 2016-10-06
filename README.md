@@ -13,10 +13,11 @@ $ wget -O zipkin.jar 'https://search.maven.org/remote_content?g=io.zipkin.java&a
 $ java -jar zipkin.jar
 ```
 
-Now, build javascript for the browser
+Now, build javascript that traces requests in the browser.
 
 ```bash
+# index.html executes bundle.js which traces a request to http://localhost:8081
 $ browserify browser.js -o bundle.js
 ```
 
-Finally, `open index.html` and reload a couple times. You can see traces in zipkin here: http://localhost:9411/?serviceName=frontend
+Finally, `open index.html` and reload a couple times. You can see traces in zipkin here: http://localhost:9411/?serviceName=browser
