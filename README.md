@@ -1,4 +1,4 @@
-# Basic example showing distributed tracing from a web browse across node.js apps
+# Basic example showing distributed tracing from a web browser across node.js apps
 This is an example app where a web browser and two express (node.js) services collaborate on an http request. Notably, timing of these requests are recorded into [Zipkin](http://zipkin.io/), a distributed tracing system. This allows you to see the how long the whole operation took, as well how much time was spent in each service.
 
 Here's an example of what it looks like
