@@ -1,5 +1,5 @@
 /* eslint-env browser */
-const {Tracer, BatchRecorder, ExplicitContext} = require('zipkin');
+const {BatchRecorder} = require('zipkin');
 const {HttpLogger} = require('zipkin-transport-http');
 
 // Send spans to Zipkin asynchronously over HTTP
@@ -10,7 +10,4 @@ const recorder = new BatchRecorder({
   })
 });
 
-const ctxImpl = new ExplicitContext();
-const tracer = new Tracer({ctxImpl, recorder});
-
-module.exports.tracer = tracer;
+module.exports.recorder = recorder;
