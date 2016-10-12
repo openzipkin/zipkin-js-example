@@ -1,15 +1,24 @@
-const {tracer} = require('./tracer.js');
+// initialize tracer
+const {recorder} = require('./recorder.js');
+const {Tracer} = require('zipkin');
+const CLSContext = require('zipkin-context-cls');
+const ctxImpl = new CLSContext('zipkin');
+const tracer = new Tracer({ctxImpl, recorder});
 
 const express = require('express');
-const zipkinMiddleware = require('zipkin-instrumentation-express').expressMiddleware;
-
 const app = express();
+const rest = require('rest');
 
-// Add the Zipkin middleware
+// instrument the server
+const zipkinMiddleware = require('zipkin-instrumentation-express').expressMiddleware;
 app.use(zipkinMiddleware({
   tracer,
   serviceName: 'frontend' // name of this application
 }));
+
+// instrument the client
+const {restInterceptor} = require('zipkin-instrumentation-cujojs-rest');
+const zipkinRest = rest.wrap(restInterceptor, {tracer, serviceName: 'frontend'});
 
 // Allow cross-origin, traced requests. See http://enable-cors.org/server_expressjs.html
 app.use((req, res, next) => {
@@ -18,9 +27,12 @@ app.use((req, res, next) => {
   next();
 });
 
-// Actual http call that will end up in the trace
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  zipkinRest('http://localhost:9000/api')
+    .then(
+      (response) => res.send(response.entity),
+      (response) => console.error("Error", response.status)
+    );
 });
 
 app.listen(8081, () => {

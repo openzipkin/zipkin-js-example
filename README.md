@@ -6,7 +6,13 @@ First, run the frontend, which will listen on http://localhost:8081
 $ node frontend.js
 ```
 
-Next, run [Zipkin](http://zipkin.io/), which stores and queries traces reported by the above services.
+Next, run the backend, which will listen on http://localhost:9000/api
+
+```bash
+$ node backend.js
+```
+
+Then, run [Zipkin](http://zipkin.io/), which stores and queries traces reported by the above services.
 
 ```bash
 $ wget -O zipkin.jar 'https://search.maven.org/remote_content?g=io.zipkin.java&a=zipkin-server&v=LATEST&c=exec'
