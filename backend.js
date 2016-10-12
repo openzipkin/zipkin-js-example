@@ -18,5 +18,5 @@ app.use(zipkinMiddleware({
 app.get('/api', (req, res) => res.send(new Date().toString()));
 
 app.listen(9000, () => {
-  console.log('Frontend listening on port 9000!');
+  console.log('Backend listening on port 9000!');
 });
