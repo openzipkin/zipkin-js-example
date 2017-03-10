@@ -24,19 +24,18 @@ Next, you can view traces that went through the backend via http://localhost:941
 
 Before you start anything, you'll need to download the libraries used in this demo:
 ```bash
-$ npm update
+$ npm install
 ```
 
 Once that's done, bundle the JavaScript used by the browser:
 ```bash
-$ browserify browser.js -o bundle.js
+$ npm run browserify
 ```
 
 ## Starting the Services
-In a separate tab or window, start each of [frontend.js](./frontend.js) and [backend.js](./backend.js):
+In a separate tab or window, run `npm start`, which will start both [frontend.js](./frontend.js) and [backend.js](./backend.js):
 ```bash
-$ node frontend.js
-$ node backend.js
+$ npm start
 ```
 
 Next, run [Zipkin](http://zipkin.io/), which stores and queries traces reported by the browser and above services.
@@ -44,4 +43,10 @@ Next, run [Zipkin](http://zipkin.io/), which stores and queries traces reported 
 ```bash
 $ wget -O zipkin.jar 'https://search.maven.org/remote_content?g=io.zipkin.java&a=zipkin-server&v=LATEST&c=exec'
 $ java -jar zipkin.jar
+```
+
+Or, if you're using docker:
+
+```bash
+$ docker run -d -p 9411:9411 openzipkin/zipkin
 ```
