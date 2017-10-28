@@ -1,10 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Tracer, ExplicitContext, BatchRecorder } from 'zipkin';
+import { Tracer, ExplicitContext, BatchRecorder, jsonEncoder } from 'zipkin';
 import wrapFetch from 'zipkin-instrumentation-fetch';
 import { HttpLogger } from 'zipkin-transport-http';
 
-const HOST = 'http://192.168.178.20:9411'
+const { JSON_V2 } = jsonEncoder;
+
+const zipkinBaseUrl = 'http://localhost:9411';
 
 export default class App extends React.Component {
   state = {
@@ -14,7 +16,8 @@ export default class App extends React.Component {
         ctxImpl: new ExplicitContext(),
         recorder: new BatchRecorder({
           logger: new HttpLogger({
-            endpoint: `${HOST}/api/v1/spans`,
+            endpoint: `${zipkinBaseUrl}/api/v2/spans`,
+            jsonEncoder: JSON_V2,
             fetch,
           }),
         }),
