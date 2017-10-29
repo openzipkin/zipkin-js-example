@@ -22,7 +22,8 @@ export default class App extends React.Component {
           }),
         }),
       }),
-      remoteServiceName: 'StarWars',
+      serviceName: 'react-native',
+      remoteServiceName: 'starwars',
     }),
   };
 

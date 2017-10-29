@@ -19,8 +19,8 @@
   "dependencies": {
     "react": "16.0.0-alpha.12",
     "react-native": "^0.48.4",
-    "zipkin": "^0.10.0",
-    "zipkin-instrumentation-fetch": "^0.10.0",
-    "zipkin-transport-http": "^0.10.0"
+    "zipkin": "^0.10.1",
+    "zipkin-instrumentation-fetch": "^0.10.1",
+    "zipkin-transport-http": "^0.10.1"
   }
 }
