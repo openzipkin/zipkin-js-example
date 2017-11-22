@@ -8,11 +8,12 @@ const {recorder} = require('./recorder');
 const {Tracer, ExplicitContext} = require('zipkin');
 
 const ctxImpl = new ExplicitContext();
-const tracer = new Tracer({ctxImpl, recorder});
+const localServiceName = 'browser';
+const tracer = new Tracer({ctxImpl, recorder, localServiceName});
 
 // instrument fetch
 const wrapFetch = require('zipkin-instrumentation-fetch');
-const zipkinFetch = wrapFetch(fetch, {tracer, serviceName: 'browser'});
+const zipkinFetch = wrapFetch(fetch, {tracer});
 
 const logEl = document.getElementById('log');
 const log = text => logEl.innerHTML = `${logEl.innerHTML}\n${text}`;

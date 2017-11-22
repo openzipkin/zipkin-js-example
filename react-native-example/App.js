@@ -16,41 +16,26 @@ const tracer = new Tracer({
       fetch,
     }),
   }),
+  localServiceName: 'react-native',
 });
 
 export default class App extends React.Component {
   state = {
     person: 'Not loaded',
-    fetch: wrapFetch(fetch, {
-      tracer,
-      serviceName: 'fetch-client',
-      remoteServiceName: 'starwars',
-    }),
+    tracer,
+    fetch: wrapFetch(fetch, {tracer, remoteServiceName: 'starwars'}), 
   };
 
   componentWillMount() {
-    const id = tracer.createRootId();
-
-    tracer.scoped(() => {
-      tracer.setId(id);
-      tracer.recordAnnotation(new Annotation.ClientSend());
-      tracer.recordServiceName('React Native');
-      
-      const randomNumber = Math.floor(Math.random() * 10) + 1;
-      tracer.recordBinary('id', randomNumber);
+    const randomNumber = Math.floor(Math.random() * 10) + 1;
+    this.state.tracer.local('pay-me', () =>
       this.state.fetch("https://swapi.co/api/people/" + randomNumber)
         .then(response => response.json())
         .then(person => this.setState({
           person: person.name,
         })
         ).catch(e => console.error(e))
-        .finally(() => {
-          tracer.scoped(() => {
-            tracer.setId(id);
-            tracer.recordAnnotation(new Annotation.ClientRecv());
-        });
-      });
-    });
+    );
   }
 
   render() {

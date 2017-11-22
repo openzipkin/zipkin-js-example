@@ -7,20 +7,18 @@ const {Tracer} = require('zipkin');
 const {recorder} = require('./recorder');
 
 const ctxImpl = new CLSContext('zipkin');
-const tracer = new Tracer({ctxImpl, recorder});
+const localServiceName = 'frontend';
+const tracer = new Tracer({ctxImpl, recorder, localServiceName});
 
 const app = express();
 
 // instrument the server
 const zipkinMiddleware = require('zipkin-instrumentation-express').expressMiddleware;
-app.use(zipkinMiddleware({
-  tracer,
-  serviceName: 'frontend' // name of this application
-}));
+app.use(zipkinMiddleware({tracer}));
 
 // instrument the client
 const {restInterceptor} = require('zipkin-instrumentation-cujojs-rest');
-const zipkinRest = rest.wrap(restInterceptor, {tracer, serviceName: 'frontend'});
+const zipkinRest = rest.wrap(restInterceptor, {tracer});
 
 // Allow cross-origin, traced requests. See http://enable-cors.org/server_expressjs.html
 app.use((req, res, next) => {
@@ -33,9 +31,11 @@ app.use((req, res, next) => {
 });
 
 app.get('/', (req, res) => {
-  zipkinRest('http://localhost:9000/api')
-    .then(response => res.send(response.entity))
-    .catch(err => console.error('Error', err.stack));
+  tracer.local('pay-me', () =>
+    zipkinRest('http://localhost:9000/api')
+      .then(response => res.send(response.entity))
+      .catch(err => console.error('Error', err.stack))
+  );
 });
 
 app.listen(8081, () => {
