@@ -6,16 +6,14 @@ const {Tracer} = require('zipkin');
 const {recorder} = require('./recorder');
 
 const ctxImpl = new CLSContext('zipkin');
-const tracer = new Tracer({ctxImpl, recorder});
+const localServiceName = 'backend';
+const tracer = new Tracer({ctxImpl, recorder, localServiceName});
 
 const app = express();
 
 // instrument the server
 const zipkinMiddleware = require('zipkin-instrumentation-express').expressMiddleware;
-app.use(zipkinMiddleware({
-  tracer,
-  serviceName: 'backend' // name of this application
-}));
+app.use(zipkinMiddleware({tracer}));
 
 app.get('/api', (req, res) => res.send(new Date().toString()));
 
