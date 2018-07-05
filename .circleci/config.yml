@@ -1,0 +1,52 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      # node-browsers come with java pre-installed
+      - image: circleci/node:6.14-browsers
+    working_directory: ~/openzipkin
+    steps:
+      - checkout
+      - run: cd ./web
+      - run: npm install
+      # install latest versions of packages
+      - run: npm install --save zipkin@latest \
+        zipkin-context-cls@latest \
+        zipkin-instrumentation-cujojs-rest@latest \
+        zipkin-instrumentation-express@latest \
+        zipkin-instrumentation-fetch@latest \
+        zipkin-transport-http@latest
+      - run: curl -sSL https://zipkin.io/quickstart.sh | bash -s
+      - run:
+          background: true
+          command: java -jar zipkin.jar
+      # block until zipkin is available
+      - run: wget --retry-connrefused -T 60 -O /dev/null http://127.0.0.1:9411/health
+      # start both processes in the background, but don't use composer as it dies
+      - run:
+          background: true
+          command: npm start
+      # hit the frontend which calls the backend
+      - run: wget -v --retry-connrefused -T 5 -O /dev/null 127.0.0.1:8081
+      - run: |
+          # wait just in case
+          sleep 1
+          test $(curl -s 127.0.0.1:9411/api/v2/traces | jq '.[0] | length') -eq 2
+
+workflows:
+  version: 2
+  commit:
+    jobs:
+      - build
+  nightly:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+                - beta
+    jobs:
+      - build
