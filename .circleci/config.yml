@@ -28,6 +28,7 @@ jobs:
       - run:
           background: true
           command: npm start
+          working_directory: ~/openzipkin/web
       # hit the frontend which calls the backend
       - run: wget -v --retry-connrefused -T 5 -O /dev/null 127.0.0.1:8081
       - run: |
