@@ -38,7 +38,7 @@ jobs:
           echo "queried traces: $traces"
           count=$(echo "$traces" | jq '.[0] | length')
           echo "count: $count"
-          test $count -eq 2
+          test $count -ge 2
 
 workflows:
   version: 2
