@@ -5,10 +5,11 @@ jobs:
     docker:
       # node-browsers come with java pre-installed
       - image: circleci/node:6.14-browsers
-    working_directory: ~/openzipkin
+    working_directory: ~/openzipkin/web
+
     steps:
-      - checkout
-      - run: cd ./web
+      - checkout:
+          path: ~/openzipkin
       - run: npm install
       # install latest versions of packages
       - run: |
@@ -28,7 +29,6 @@ jobs:
       - run:
           background: true
           command: npm start
-          working_directory: ~/openzipkin/web
       # hit the frontend which calls the backend
       - run: wget -v --retry-connrefused -T 5 -O /dev/null 127.0.0.1:8081
       - run: |
