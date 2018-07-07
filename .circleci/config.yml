@@ -11,12 +11,13 @@ jobs:
       - run: cd ./web
       - run: npm install
       # install latest versions of packages
-      - run: npm install --save zipkin@latest \
-        zipkin-context-cls@latest \
-        zipkin-instrumentation-cujojs-rest@latest \
-        zipkin-instrumentation-express@latest \
-        zipkin-instrumentation-fetch@latest \
-        zipkin-transport-http@latest
+      - run: |
+          npm install --save zipkin@latest \
+                             zipkin-context-cls@latest \
+                             zipkin-instrumentation-cujojs-rest@latest \
+                             zipkin-instrumentation-express@latest \
+                             zipkin-instrumentation-fetch@latest \
+                             zipkin-transport-http@latest
       - run: curl -sSL https://zipkin.io/quickstart.sh | bash -s
       - run:
           background: true
