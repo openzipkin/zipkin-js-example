@@ -34,9 +34,11 @@ jobs:
       - run: |
           # wait just in case
           sleep 1
-          traces=\"$(curl -s 127.0.0.1:9411/api/v2/traces)\"
-          echo \"queried traces: $traces\"
-          test $(echo "$traces" | jq '.[0] | length') -eq 2
+          traces="$(curl -s 127.0.0.1:9411/api/v2/traces)"
+          echo "queried traces: $traces"
+          count=$(echo "$traces" | jq '.[0] | length')
+          echo "count: $count"
+          test $count -eq 2
 
 workflows:
   version: 2
