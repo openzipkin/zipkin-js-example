@@ -5,18 +5,20 @@ jobs:
     docker:
       # node-browsers come with java pre-installed
       - image: circleci/node:6.14-browsers
-    working_directory: ~/openzipkin
+    working_directory: ~/openzipkin/web
+
     steps:
-      - checkout
-      - run: cd ./web
+      - checkout:
+          path: ~/openzipkin
       - run: npm install
       # install latest versions of packages
-      - run: npm install --save zipkin@latest \
-        zipkin-context-cls@latest \
-        zipkin-instrumentation-cujojs-rest@latest \
-        zipkin-instrumentation-express@latest \
-        zipkin-instrumentation-fetch@latest \
-        zipkin-transport-http@latest
+      - run: |
+          npm install --save zipkin@latest \
+                             zipkin-context-cls@latest \
+                             zipkin-instrumentation-cujojs-rest@latest \
+                             zipkin-instrumentation-express@latest \
+                             zipkin-instrumentation-fetch@latest \
+                             zipkin-transport-http@latest
       - run: curl -sSL https://zipkin.io/quickstart.sh | bash -s
       - run:
           background: true
@@ -32,7 +34,11 @@ jobs:
       - run: |
           # wait just in case
           sleep 1
-          test $(curl -s 127.0.0.1:9411/api/v2/traces | jq '.[0] | length') -eq 2
+          traces="$(curl -s 127.0.0.1:9411/api/v2/traces)"
+          echo "queried traces: $traces"
+          count=$(echo "$traces" | jq '.[0] | length')
+          echo "count: $count"
+          test $count -ge 2
 
 workflows:
   version: 2
