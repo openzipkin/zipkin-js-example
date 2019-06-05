@@ -1,8 +1,8 @@
 # Basic example showing distributed tracing from a web browser across node.js apps
-This is an example app where a web browser and two express (node.js) services collaborate on an http request. Notably, timing of these requests are recorded into [Zipkin](http://zipkin.io/), a distributed tracing system. This allows you to see the how long the whole operation took, as well how much time was spent in each service.
+This is an example app where a web browser and two express (node.js) services collaborate on an http request. Notably, timing of these requests are recorded into [Zipkin](https://zipkin.apache.org/), a distributed tracing system. This allows you to see the how long the whole operation took, as well how much time was spent in each service.
 
 Here's an example of what it looks like
-<img width="972" alt="zipkin screen shot" src="https://cloud.githubusercontent.com/assets/64215/19316259/5a23bd0a-90d3-11e6-9034-c9c3cf26db28.png">
+<img width="972" alt="zipkin screen shot" src="https://user-images.githubusercontent.com/64215/58941389-40a31680-87ae-11e9-80bd-6b8d5ef222c3.png"/>
 
 This example was initially shown at [DevOpsDays Singapore on Oct 8, 2016](https://speakerdeck.com/adriancole/introduction-to-distributed-tracing-and-zipkin-at-devopsdays-singapore). It was ported from similar examples, such as [Spring Boot](https://github.com/openzipkin/sleuth-webmvc-example).
 
@@ -38,10 +38,10 @@ In a separate tab or window, run `npm start`, which will start both [frontend.js
 $ npm start
 ```
 
-Next, run [Zipkin](http://zipkin.io/), which stores and queries traces reported by the browser and above services.
+Next, run [Zipkin](https://zipkin.apache.org/), which stores and queries traces reported by the browser and above services.
 
 ```bash
-$ wget -O zipkin.jar 'https://search.maven.org/remote_content?g=io.zipkin.java&a=zipkin-server&v=LATEST&c=exec'
+$ curl -sSL https://zipkin.apache.org/quickstart.sh | bash -s
 $ java -jar zipkin.jar
 ```
 
