@@ -8,6 +8,7 @@ const {HttpLogger} = require('zipkin-transport-http');
 // Send spans to Zipkin asynchronously over HTTP
 const zipkinBaseUrl = 'http://localhost:9411';
 const recorder = new BatchRecorder({
+  timeout: 500000,
   logger: new HttpLogger({
     endpoint: `${zipkinBaseUrl}/api/v2/spans`,
     jsonEncoder: JSON_V2
