@@ -23,7 +23,7 @@ function debugRecorder(serviceName) {
     }
   };
 
-  const batchRecorder = new BatchRecorder({timeout: 500000, logger});
+  const batchRecorder = new BatchRecorder({logger});
 
   // This is a hack that lets you see which annotations become which spans
   return ({
