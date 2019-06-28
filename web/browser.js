@@ -4,11 +4,12 @@
 process.hrtime = require('browser-process-hrtime');
 
 // setup tracer
-const {recorder} = require('./recorder');
+const {debugRecorder} = require('./recorder');
 const {Tracer, ExplicitContext} = require('zipkin');
 
 const ctxImpl = new ExplicitContext();
 const localServiceName = 'browser';
+const recorder = debugRecorder(localServiceName);
 const tracer = new Tracer({ctxImpl, recorder, localServiceName});
 
 // instrument fetch
