@@ -32,11 +32,11 @@ app.use((req, res, next) => {
 });
 
 app.get('/', (req, res) => {
-//  tracer.local('pay-me', () =>
+  tracer.local('pay-me', () =>
     zipkinAxios.get('http://localhost:9000/api')
       .then(response => res.send(response.data))
       .catch(err => console.error('Error', err.response ? err.response.status : err.message))
- // );
+  );
 });
 
 app.listen(8081, () => {
