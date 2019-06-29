@@ -1,8 +1,8 @@
 # Basic example showing distributed tracing from a web browser across node.js apps
-This is an example app where a web browser and two express (node.js) services collaborate on an http request. Notably, timing of these requests are recorded into [Zipkin](https://zipkin.apache.org/), a distributed tracing system. This allows you to see the how long the whole operation took, as well how much time was spent in each service.
+This is an example app where a web browser and two express (node.js) services collaborate on an http request. Notably, timing of these requests are recorded into [Zipkin](https://zipkin.io/), a distributed tracing system. This allows you to see the how long the whole operation took, as well how much time was spent in each service.
 
 Here's an example of what it looks like
-<img width="972" alt="zipkin screen shot" src="https://user-images.githubusercontent.com/64215/58941389-40a31680-87ae-11e9-80bd-6b8d5ef222c3.png"/>
+<img width="1024" alt="zipkin screen shot" src="https://user-images.githubusercontent.com/64215/60377642-51f8df00-9a4b-11e9-88f0-a33428e6110c.png" />
 
 This example was initially shown at [DevOpsDays Singapore on Oct 8, 2016](https://speakerdeck.com/adriancole/introduction-to-distributed-tracing-and-zipkin-at-devopsdays-singapore). It was ported from similar examples, such as [Spring Boot](https://github.com/openzipkin/sleuth-webmvc-example).
 
@@ -38,10 +38,10 @@ In a separate tab or window, run `npm start`, which will start both [frontend.js
 $ npm start
 ```
 
-Next, run [Zipkin](https://zipkin.apache.org/), which stores and queries traces reported by the browser and above services.
+Next, run [Zipkin](https://zipkin.io/), which stores and queries traces reported by the browser and above services.
 
 ```bash
-$ curl -sSL https://zipkin.apache.org/quickstart.sh | bash -s
+$ curl -sSL https://zipkin.io/quickstart.sh | bash -s
 $ java -jar zipkin.jar
 ```
 
@@ -50,3 +50,37 @@ Or, if you're using docker:
 ```bash
 $ docker run -d -p 9411:9411 openzipkin/zipkin
 ```
+
+## Debugging
+zipkin-js bundles events together and asynchronously sends them as json to Zipkin.
+
+If you want to see which events are recorded vs the json sent to Zipkin as json, start your servers differently:
+```bash
+$ DEBUG=true npm start
+```
+
+Here's example output:
+```
+$ DEBUG=true npm start
+
+> zipkin-js-example@0.0.1 start /Users/acole/oss/zipkin-js-example/web
+> node servers.js
+
+Backend listening on port 9000!
+Frontend listening on port 8081!
+frontend recording: a1b7b7274a26ac85/a1b7b7274a26ac85 ServiceName("frontend")
+frontend recording: a1b7b7274a26ac85/a1b7b7274a26ac85 Rpc("OPTIONS")
+frontend recording: a1b7b7274a26ac85/a1b7b7274a26ac85 BinaryAnnotation(http.path="/")
+frontend recording: a1b7b7274a26ac85/a1b7b7274a26ac85 ServerRecv()
+frontend recording: a1b7b7274a26ac85/a1b7b7274a26ac85 LocalAddr(host="InetAddress(192.168.43.211)", port=0)
+frontend recording: a1b7b7274a26ac85/a1b7b7274a26ac85 BinaryAnnotation(http.status_code="200")
+frontend recording: a1b7b7274a26ac85/a1b7b7274a26ac85 ServerSend()
+frontend reporting: {"traceId":"a1b7b7274a26ac85","id":"a1b7b7274a26ac85","name":"options","kind":"SERVER","timestamp":1561769117353000,"duration":8233,"localEndpoint":{"serviceName":"frontend","ipv4":"192.168.43.211"},"tags":{"http.path":"/","http.status_code":"200"}}
+--snip--
+```
+
+You can also see this in the browser's javascript console, if you reload index.html with the query parameter `?debug`.
+
+Here's example output:
+
+<img width="1178" alt="browser debug" src="https://user-images.githubusercontent.com/64215/60377536-bb2c2280-9a4a-11e9-81c2-421ae2e1d125.png">
