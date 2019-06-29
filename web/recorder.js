@@ -5,6 +5,10 @@ const {
 } = require('zipkin');
 const {HttpLogger} = require('zipkin-transport-http');
 
+const debug = 'undefined' !== typeof window
+  ? window.location.search.indexOf('debug') !== -1
+  : process.env.DEBUG;
+
 // Send spans to Zipkin asynchronously over HTTP
 const zipkinBaseUrl = 'http://localhost:9411';
 
@@ -12,6 +16,10 @@ const httpLogger = new HttpLogger({
   endpoint: `${zipkinBaseUrl}/api/v2/spans`,
   jsonEncoder: JSON_V2
 });
+
+function recorder(serviceName) {
+  return debug ? debugRecorder(serviceName) : new BatchRecorder({logger: httpLogger});
+}
 
 function debugRecorder(serviceName) {
   // This is a hack that lets you see the data sent to Zipkin!
@@ -34,4 +42,5 @@ function debugRecorder(serviceName) {
     }
   });
 }
-module.exports.debugRecorder = debugRecorder;
+
+module.exports.recorder = recorder;

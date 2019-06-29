@@ -50,3 +50,12 @@ Or, if you're using docker:
 ```bash
 $ docker run -d -p 9411:9411 openzipkin/zipkin
 ```
+
+## Debugging
+
+If you want to see what data is recorded and sent to Zipkin as json, start your servers differently:
+```bash
+$ DEBUG=true npm start
+```
+
+If you want to see this also in the browser's javascript console, reload the page with the query parameter `?debug`.

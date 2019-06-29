@@ -3,12 +3,11 @@
 const express = require('express');
 const CLSContext = require('zipkin-context-cls');
 const {Tracer} = require('zipkin');
-const {debugRecorder} = require('./recorder');
+const {recorder} = require('./recorder');
 
 const ctxImpl = new CLSContext('zipkin');
 const localServiceName = 'backend';
-const recorder = debugRecorder(localServiceName);
-const tracer = new Tracer({ctxImpl, recorder, localServiceName});
+const tracer = new Tracer({ctxImpl, recorder: recorder(localServiceName), localServiceName});
 
 const app = express();
 
