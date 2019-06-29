@@ -26,7 +26,7 @@ function debugRecorder(serviceName) {
   const logger = {
     logSpan: (span) => {
       const json = JSON_V2.encode(span);
-      console.log(`${serviceName} sending: ${json}`);
+      console.log(`${serviceName} reporting: ${json}`);
       httpLogger.logSpan(span);
     }
   };
