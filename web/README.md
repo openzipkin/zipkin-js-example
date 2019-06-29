@@ -52,10 +52,35 @@ $ docker run -d -p 9411:9411 openzipkin/zipkin
 ```
 
 ## Debugging
+zipkin-js bundles events together and asynchronously sends them as json to Zipkin.
 
-If you want to see what data is recorded and sent to Zipkin as json, start your servers differently:
+If you want to see which events are recorded vs the json sent to Zipkin as json, start your servers differently:
 ```bash
 $ DEBUG=true npm start
 ```
 
-If you want to see this also in the browser's javascript console, reload the page with the query parameter `?debug`.
+Here's example output:
+```
+$ DEBUG=true npm start
+
+> zipkin-js-example@0.0.1 start /Users/acole/oss/zipkin-js-example/web
+> node servers.js
+
+Backend listening on port 9000!
+Frontend listening on port 8081!
+frontend recording: a1b7b7274a26ac85/a1b7b7274a26ac85 ServiceName("frontend")
+frontend recording: a1b7b7274a26ac85/a1b7b7274a26ac85 Rpc("OPTIONS")
+frontend recording: a1b7b7274a26ac85/a1b7b7274a26ac85 BinaryAnnotation(http.path="/")
+frontend recording: a1b7b7274a26ac85/a1b7b7274a26ac85 ServerRecv()
+frontend recording: a1b7b7274a26ac85/a1b7b7274a26ac85 LocalAddr(host="InetAddress(192.168.43.211)", port=0)
+frontend recording: a1b7b7274a26ac85/a1b7b7274a26ac85 BinaryAnnotation(http.status_code="200")
+frontend recording: a1b7b7274a26ac85/a1b7b7274a26ac85 ServerSend()
+frontend reporting: {"traceId":"a1b7b7274a26ac85","id":"a1b7b7274a26ac85","name":"options","kind":"SERVER","timestamp":1561769117353000,"duration":8233,"localEndpoint":{"serviceName":"frontend","ipv4":"192.168.43.211"},"tags":{"http.path":"/","http.status_code":"200"}}
+--snip--
+```
+
+You can also see this in the browser's javascript console, if you reload index.html with the query parameter `?debug`.
+
+Here's example output:
+
+<img width="1178" alt="browser debug" src="https://user-images.githubusercontent.com/64215/60377536-bb2c2280-9a4a-11e9-81c2-421ae2e1d125.png">
