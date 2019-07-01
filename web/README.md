@@ -24,31 +24,32 @@ Next, you can view traces that went through the backend via http://localhost:941
 
 Before you start anything, you'll need to download the libraries used in this demo:
 ```bash
-$ npm install
+npm install
 ```
 
 Once that's done, bundle the JavaScript used by the browser:
 ```bash
-$ npm run browserify
+npm run browserify
 ```
 
-## Starting the Services
+## Starting the services
 In a separate tab or window, run `npm start`, which will start both [frontend.js](./frontend.js) and [backend.js](./backend.js):
+
 ```bash
-$ npm start
+npm start
 ```
 
 Next, run [Zipkin](https://zipkin.io/), which stores and queries traces reported by the browser and above services.
 
 ```bash
-$ curl -sSL https://zipkin.io/quickstart.sh | bash -s
-$ java -jar zipkin.jar
+curl -sSL https://zipkin.io/quickstart.sh | bash -s
+java -jar zipkin.jar
 ```
 
 Or, if you're using docker:
 
 ```bash
-$ docker run -d -p 9411:9411 openzipkin/zipkin
+docker run -d -p 9411:9411 openzipkin/zipkin
 ```
 
 ## Debugging
@@ -56,12 +57,12 @@ zipkin-js bundles events together and asynchronously sends them as json to Zipki
 
 If you want to see which events are recorded vs the json sent to Zipkin as json, start your servers differently:
 ```bash
-$ DEBUG=true npm start
+DEBUG=true npm start
 ```
 
 Here's example output:
 ```
-$ DEBUG=true npm start
+DEBUG=true npm start
 
 > zipkin-js-example@0.0.1 start /Users/acole/oss/zipkin-js-example/web
 > node servers.js
