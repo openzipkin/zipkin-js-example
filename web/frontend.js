@@ -17,7 +17,7 @@ const zipkinMiddleware = require('zipkin-instrumentation-express').expressMiddle
 app.use(zipkinMiddleware({tracer}));
 
 // instrument the client
-const {wrapAxios} = require('zipkin-instrumentation-axiosjs');
+const wrapAxios = require('zipkin-instrumentation-axiosjs');
 const zipkinAxios = wrapAxios(axios, {tracer});
 
 // Allow cross-origin, traced requests. See http://enable-cors.org/server_expressjs.html
