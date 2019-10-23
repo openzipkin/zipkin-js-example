@@ -15,7 +15,7 @@ jobs:
       - run: |
           npm install --save zipkin@latest \
                              zipkin-context-cls@latest \
-                             zipkin-instrumentation-cujojs-rest@latest \
+                             zipkin-instrumentation-axiosjs@latest \
                              zipkin-instrumentation-express@latest \
                              zipkin-instrumentation-fetch@latest \
                              zipkin-transport-http@latest
