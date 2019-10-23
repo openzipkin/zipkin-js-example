@@ -11,17 +11,17 @@
     "browserify": "browserify browser.js -o bundle.js"
   },
   "dependencies": {
+    "@types/express": "^4.0.9",
+    "axios": "^0.19.0",
     "browser-process-hrtime": "^1.0",
     "express": "^4.0",
-    "@types/express": "^4.0.9",
     "npm": "^6.9",
-    "axios": "^0.19.0",
-    "zipkin": "^0.18",
-    "zipkin-context-cls": "^0.18",
-    "zipkin-instrumentation-axiosjs": "^0.18",
-    "zipkin-instrumentation-express": "^0.18",
-    "zipkin-instrumentation-fetch": "^0.18",
-    "zipkin-transport-http": "^0.18"
+    "zipkin": "^0.19.1",
+    "zipkin-context-cls": "^0.19.0",
+    "zipkin-instrumentation-axiosjs": "^0.19.1",
+    "zipkin-instrumentation-express": "^0.19.1",
+    "zipkin-instrumentation-fetch": "^0.19.1",
+    "zipkin-transport-http": "^0.19.1"
   },
   "devDependencies": {
     "browserify": "^16.2",
