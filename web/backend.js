@@ -17,7 +17,7 @@ app.use(zipkinMiddleware({tracer}));
 
 function sleep(milliseconds) {
   const start = new Date().getTime();
-  for (let i = 0; i < 1e7; i += 1) {
+  for (let i = 0; i < 1e10; i += 1) {
     if ((new Date().getTime() - start) > milliseconds) {
       break;
     }
