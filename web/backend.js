@@ -4,6 +4,7 @@ const express = require('express');
 const CLSContext = require('zipkin-context-cls');
 const {Tracer} = require('zipkin');
 const {recorder} = require('./recorder');
+//const {recorder} = require('./aws-sqs-recorder');
 
 const ctxImpl = new CLSContext('zipkin');
 const localServiceName = 'backend';

@@ -22,6 +22,7 @@
     "zipkin-instrumentation-axiosjs": "^0.19.2",
     "zipkin-instrumentation-express": "^0.19.2",
     "zipkin-instrumentation-fetch": "^0.19.2",
+    "zipkin-transport-http": "^0.19.2",
     "zipkin-transport-aws-sqs": "^0.21.0"
   },
   "devDependencies": {
