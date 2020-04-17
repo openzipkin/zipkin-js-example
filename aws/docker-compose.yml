@@ -1,0 +1,25 @@
+version: "2.1"
+
+services:
+  localstack:
+    image: localstack/localstack
+    ports:
+      - '4566-4599:4566-4599'
+      - '8080:8080'
+    environment:
+      AWS_DEFAULT_REGION: us-east-1
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+    volumes:
+      - './localstack-init.sh:/docker-entrypoint-initaws.d/init.sh'
+  zipkin-aws:
+    image: openzipkin/zipkin-aws
+    ports:
+      - '9411:9411'
+    environment:
+      SQS_QUEUE_URL: http://localstack:4576/queue/sqs-test
+      AWS_REGION: us-east-1
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+    depends_on:
+      - localstack
