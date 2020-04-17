@@ -17,12 +17,12 @@
     "express": "^4.0",
     "node-fetch": "^2.6.0",
     "npm": "^6.9",
-    "zipkin": "^0.19.1",
+    "zipkin": "^0.19.2",
     "zipkin-context-cls": "^0.19.0",
-    "zipkin-instrumentation-axiosjs": "^0.19.1",
-    "zipkin-instrumentation-express": "^0.19.1",
-    "zipkin-instrumentation-fetch": "^0.19.1",
-    "zipkin-transport-http": "^0.19.1"
+    "zipkin-instrumentation-axiosjs": "^0.19.2",
+    "zipkin-instrumentation-express": "^0.19.2",
+    "zipkin-instrumentation-fetch": "^0.19.2",
+    "zipkin-transport-aws-sqs": "^0.21.0"
   },
   "devDependencies": {
     "browserify": "^16.2",
